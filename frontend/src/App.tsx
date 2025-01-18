@@ -5,7 +5,7 @@ import Generate from "@/pages/Generate";
 import AuthRoute from "@/components/AuthRoute";
 
 function App() {
-  const isAuthenticated = false;
+  const isAuthenticated = true; // TODO add auth
 
   return (
     <>
@@ -23,7 +23,6 @@ function App() {
           />
         </Routes>
       </Router>
-      );
     </>
   );
 }

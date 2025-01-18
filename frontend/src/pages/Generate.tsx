@@ -36,10 +36,9 @@ const formSchema = z.object({
 
 export default function Generate() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [transcript, setTranscript] = useState<string>("");
   const [link, setLink] = useState<string>("");
 
-  function youtubeParser(url: string): string | Boolean {
+  function youtubeParser(url: string): string | false {
     const regExp =
       /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     const match = url.match(regExp);

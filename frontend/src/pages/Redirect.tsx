@@ -9,15 +9,16 @@ const Redirect = () => {
   useEffect(() => {
     const redirectToLink = async () => {
       try {
-        const response = await fetch(`${API_URL}/link/${code}`);
-        if (response.ok) {
-          const { redirect_url } = await response.json();
-          window.location.href = redirect_url;
-        } else {
+        const response = await fetch(`${API_URL}/link/${code}/decode`);
+        if (response.status === 404) {
           console.error("Failed to fetch the link");
+          window.location.href = "/";
+        } else {
+          window.location.assign(`${API_URL}/link/${code}`);
         }
       } catch (error) {
         console.error("Error fetching the link:", error);
+        window.location.href = "/";
       }
     };
 

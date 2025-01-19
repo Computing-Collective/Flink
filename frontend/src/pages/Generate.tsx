@@ -18,21 +18,19 @@ import Navbar from "@/components/Navbar";
 import { API_URL } from "@/App";
 
 const formSchema = z.object({
-  videoId: z
+  videoUrl: z
     .string()
     .regex(
       /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/,
       {
-        message: "Invalid YouTube video ID.",
+        message: "Invalid YouTube Url.",
       }
-    )
-    .or(
-      z.string().length(11, {
-        message: "Video ID must be exactly 11 characters.",
-      })
     ),
   productName: z.string().min(3, {
     message: "Product name must be at least 3 characters.",
+  }),
+  redirectUrl: z.string().url({
+    message: "Invalid URL.",
   }),
 });
 
@@ -40,18 +38,11 @@ export default function Generate() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [link, setLink] = useState<string>("");
 
-  function youtubeParser(url: string): string | false {
-    const regExp =
-      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[7].length == 11 ? match[7] : false;
-  }
-
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      videoId: "",
+      videoUrl: "",
       productName: "",
     },
   });
@@ -60,22 +51,14 @@ export default function Generate() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
-    let videoId = values.videoId;
-    if (values.videoId.length > 11) {
-      const id = youtubeParser(values.videoId);
-      if (id === false) {
-        console.error("Invalid YouTube video ID.");
-        return;
-      }
-      console.log("Video ID: ", id);
-      videoId = id;
-    }
-    console.log("Video ID: ", videoId);
-    handleGenerate(videoId, values.productName);
+    handleGenerate(values.videoUrl, values.productName, values.redirectUrl);
   }
 
-  const handleGenerate = (videoId: string, productName: string) => {
+  const handleGenerate = (
+    videoUrl: string,
+    productName: string,
+    redirectUrl: string
+  ) => {
     setIsLoading(true);
     // Simulate an async operation
     const response = fetch(`${API_URL}/create_link`, {
@@ -86,10 +69,10 @@ export default function Generate() {
       body: JSON.stringify({
         user_id: localStorage.getItem("userId"),
         product: productName,
-        source_url: videoId,
-        redirect_url: redirectUrl 
+        source_url: videoUrl,
+        redirect_url: redirectUrl,
       }),
-    })
+    });
     setTimeout(() => {
       setIsLoading(false);
       setLink("https://example.com/affiliate-link");
@@ -115,16 +98,19 @@ export default function Generate() {
                   className="space-y-8">
                   <FormField
                     control={form.control}
-                    name="videoId"
+                    name="videoUrl"
                     render={({ field }) => (
                       <>
                         <FormItem className="text-left">
-                          <FormLabel className="text-left">Video ID</FormLabel>
+                          <FormLabel className="text-left">Video URL</FormLabel>
                           <FormControl>
-                            <Input placeholder="dQw4w9WgXcQ" {...field} />
+                            <Input
+                              placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                              {...field}
+                            />
                           </FormControl>
                           <FormDescription>
-                            The video ID from YouTube
+                            The video URL from YouTube
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -145,6 +131,29 @@ export default function Generate() {
                           </FormControl>
                           <FormDescription>
                             The product name to be displayed
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      </>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="redirectUrl"
+                    render={({ field }) => (
+                      <>
+                        <FormItem className="text-left">
+                          <FormLabel className="text-left">
+                            Redirect URL
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="https://dbrand.com"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            The URL to redirect the user to
                           </FormDescription>
                           <FormMessage />
                         </FormItem>

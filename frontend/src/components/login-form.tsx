@@ -35,7 +35,9 @@ export function LoginForm({
 
     const json = await response.json();
 
-    const userId = json.userId;
+    const userId = json.id;
+
+    console.log(userId);
 
     if (userId) {
       localStorage.setItem("userId", userId);
@@ -86,7 +88,13 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full" onClick={handleLogin}>
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLogin();
+                }}>
                 {signup ? "Sign up" : "Login"}
               </Button>
             </div>

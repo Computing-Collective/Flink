@@ -12,6 +12,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [username, setUsername] = useState("MKBHD");
   function handleLogout() {
+    localStorage.removeItem("userId");
     window.location.href = "/login";
   }
 

@@ -7,9 +7,11 @@ import {
 import { Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const Navbar = () => {
-  function handleLogin() {
+  const [username, setUsername] = useState("MKBHD");
+  function handleLogout() {
     window.location.href = "/login";
   }
 
@@ -25,11 +27,17 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="flex-grow" />
+        <div className="flex justify-center items-center flex-grow">
+          <p className="text-lg">{username}</p>
+        </div>
+        <div className="flex-grow" />
         <Button
           variant="secondary"
           className="hidden md:flex px-2"
-          onClick={handleLogin}>
-          Login
+          onClick={() => {
+            handleLogout();
+          }}>
+          Logout
         </Button>
       </div>
 
@@ -55,8 +63,8 @@ const Navbar = () => {
           <Button
             variant="secondary"
             className="flex md:hidden px-2"
-            onClick={handleLogin}>
-            Login
+            onClick={handleLogout}>
+            Logout
           </Button>
         </div>
       </div>

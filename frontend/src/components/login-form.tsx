@@ -17,6 +17,9 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  if (localStorage.getItem("userId")) {
+    window.location.href = "/";
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -26,6 +29,12 @@ export function LoginForm({
   async function handleLogin() {
     let route = "login";
     if (signup) {
+      if (!name) {
+        toast({
+          title: "Name is required",
+        });
+        return;
+      }
       route = "signup";
     }
     const response = await fetch(`${API_URL}/${route}`, {
@@ -41,7 +50,7 @@ export function LoginForm({
     if (response.ok) {
       const userId = json.id;
       const name = json.name;
-      console.log(userId);
+      console.log(userId, name);
 
       if (userId && name) {
         localStorage.setItem("userId", userId);
@@ -73,14 +82,25 @@ export function LoginForm({
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <div className="flex items-center">Name</div>
-                <Input
-                  id="name"
-                  type="text"
-                  required
-                  placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                {signup ? (
+                  <Input
+                    id="name"
+                    type="text"
+                    required
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                ) : (
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled
+                  />
+                )}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email" className="text-start">
@@ -107,7 +127,6 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-
               <Button
                 type="submit"
                 className="w-full"

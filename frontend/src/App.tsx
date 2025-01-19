@@ -4,6 +4,7 @@ import Generate from "@/pages/Generate";
 import AuthRoute from "@/components/AuthRoute";
 import { History } from "@/pages/History";
 import { Toaster } from "@/components/ui/toaster";
+import Redirect from "@/pages/Redirect";
 
 export const API_URL = "http://localhost:8000";
 
@@ -33,6 +34,7 @@ function App() {
               />
             }
           />
+          <Route path="/link/:code" element={<Redirect />} />
         </Routes>
       </Router>
       <Toaster />

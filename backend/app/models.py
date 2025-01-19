@@ -38,12 +38,6 @@ class UsersPublic(SQLModel):
 
 # Shared properties
 class LinkBase(SQLModel):
-    code: str = Field(
-        unique=True,
-        min_length=4,
-        max_length=8,
-        default_factory=lambda: str(uuid.uuid4())[:4],
-    )
     source_url: str = Field(max_length=2083)
     redirect_url: str = Field(max_length=2083)
     product: str = Field(max_length=255)
@@ -63,6 +57,12 @@ class LinkUpdate(LinkBase):
 # Database model, database table inferred from class name
 class Link(LinkBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    code: str = Field(
+        unique=True,
+        min_length=4,
+        max_length=8,
+        default_factory=lambda: str(uuid.uuid4())[:4],
+    )
     user_id: uuid.UUID = Field(
         foreign_key="user.id", nullable=False, ondelete="CASCADE"
     )
@@ -72,6 +72,7 @@ class Link(LinkBase, table=True):
 # Properties to return via API, id is always required
 class LinkPublic(LinkBase):
     id: uuid.UUID
+    code: str
     user_id: uuid.UUID
 
 

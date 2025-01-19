@@ -26,7 +26,7 @@ def get_session():
 SessionDep = Annotated[Session, Depends(get_session)]
 
 
-def create_user(*, session: Session, user: UserRegister) -> User:
+def create_user(*, session: Session, user: UserCreate) -> User:
     db_user = User.model_validate(
         user, update={"hashed_password": get_password_hash(user.password)}
     )

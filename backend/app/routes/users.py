@@ -1,5 +1,4 @@
 from fastapi import APIRouter, HTTPException
-
 from sqlmodel import select
 
 import app.database as db
@@ -17,12 +16,12 @@ def login(user: UserLogin, session: db.SessionDep):
 
 
 @router.post("/signup")
-def signup(user: UserRegister, session: db.SessionDep):
-    user = db.get_user_by_email(session=session, email=user.email)
-    if user:
+def signup(user: UserCreate, session: db.SessionDep):
+    test_user = db.get_user_by_email(session=session, email=user.email)
+    if test_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     try:
-        db.create_user(session=session, user=user)
+        db_user = db.create_user(session=session, user=user)
     except:
         raise HTTPException(status_code=400, detail="Invalid user data")
     return {"id": db_user.id}

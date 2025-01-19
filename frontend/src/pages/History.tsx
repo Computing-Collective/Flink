@@ -105,6 +105,7 @@ export function History() {
       header: ({ table }) => (
         <div className="flex justify-center">
           <Checkbox
+            className="bg-transparent"
             checked={
               table.getIsAllPageRowsSelected() ||
               (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -119,6 +120,7 @@ export function History() {
       cell: ({ row }) => (
         <div className="flex justify-center">
           <Checkbox
+            className="bg-transparent"
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
@@ -153,6 +155,7 @@ export function History() {
         return (
           <Button
             variant="ghost"
+            className="text-black bg-transparent"
             onClick={() =>
               column.toggleSorting(column.getIsSorted() === "asc")
             }>
@@ -171,7 +174,7 @@ export function History() {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
+              <Button variant="ghost" className="h-8 w-8 p-0 bg-transparent">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal />
               </Button>

@@ -97,7 +97,11 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <div className="flex items-center">Name</div>
@@ -146,13 +150,7 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button
-                type="submit"
-                className="w-full"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLogin();
-                }}>
+              <Button type="submit" className="w-full">
                 {signup ? "Sign up" : "Login"}
               </Button>
             </div>

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const Navbar = () => {
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [username] = useState(localStorage.getItem("username"));
   function handleLogout() {
     localStorage.removeItem("userId");
     localStorage.removeItem("username");

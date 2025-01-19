@@ -65,6 +65,16 @@ export type AffiliateLink = {
   code: string;
 };
 
+type AffiliateLinkResponse = {
+  source_url: string;
+  redirect_url: string;
+  product: string;
+  website_text: string;
+  id: string;
+  code: string;
+  user_id: string;
+};
+
 export function History() {
   const { toast } = useToast();
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -84,7 +94,7 @@ export function History() {
         );
         const result = await response.json();
         console.log(result);
-        const resultData = result.data.map((item: any) => ({
+        const resultData = result.data.map((item: AffiliateLinkResponse) => ({
           id: item.id,
           originalUrl: item.source_url,
           customUrl: item.redirect_url,

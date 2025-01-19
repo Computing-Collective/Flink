@@ -17,19 +17,11 @@ async def lifespan(app: FastAPI):
     yield
 
 
-origins = [
-    "http://localhost",
-    "http://localhost:5173",
-    "http://localhost:8080",
-    "https://speaker-search.myshopify.com",
-]
-
-
 app = FastAPI(lifespan=lifespan)
 app.include_router(api.api_router)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

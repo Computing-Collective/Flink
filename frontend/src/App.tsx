@@ -5,8 +5,10 @@ import AuthRoute from "@/components/AuthRoute";
 import { History } from "@/pages/History";
 import { Toaster } from "@/components/ui/toaster";
 
+export const API_URL = "http://localhost:8000";
+
 function App() {
-  const isAuthenticated = true; // TODO add auth
+  const isAuthenticated = localStorage.getItem("userId") !== null;
 
   return (
     <div className="text-center p-4 min-h-screen min-w-[100vw]">

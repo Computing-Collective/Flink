@@ -35,6 +35,25 @@ export function LoginForm({
         });
         return;
       }
+      if (!email) {
+        toast({
+          title: "Email is required",
+        });
+        return;
+      }
+      if (!password) {
+        toast({
+          title: "Password is required",
+        });
+        return;
+      }
+      if (password.length < 8 || password.length > 40) {
+        toast({
+          title:
+            "Password must be at least 8 characters or at most 40 characters",
+        });
+        return;
+      }
       route = "signup";
     }
     const response = await fetch(`${API_URL}/${route}`, {

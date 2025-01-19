@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
+import { API_URL } from "@/App";
 
 // const data: AffiliateLink[] = [
 //   {
@@ -77,8 +78,11 @@ export function History() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("API_URL/links");
+        const response = await fetch(
+          `${API_URL}/links?id=${localStorage.getItem("userId")}`
+        );
         const result = await response.json();
+        console.log(result);
         const resultData = result.data.map((item: any) => ({
           id: item.id,
           originalUrl: item.source_url,

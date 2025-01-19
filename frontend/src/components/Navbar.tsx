@@ -22,13 +22,13 @@ const Navbar = () => {
       <div className="hidden md:flex min-w-full">
         <ul className="hidden md:flex items-center gap-10 text-card-foreground">
           <li className="text-primary font-medium">
-            <a href="/">Home</a>
+            <a href="/">New</a>
           </li>
           <li>
             <a href="/history">History</a>
           </li>
         </ul>
-        <div className="m-auto">{username}</div>
+        <div className="m-auto font-semibold">Welcome, {username}</div>
         <Button
           variant="secondary"
           className="hidden md:flex px-2"
@@ -50,7 +50,7 @@ const Navbar = () => {
 
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                <a href="/">Home</a>
+                <a href="/">New</a>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <a href="/history">History</a>

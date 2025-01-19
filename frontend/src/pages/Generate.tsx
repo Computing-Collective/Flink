@@ -173,11 +173,11 @@ export default function Generate() {
                     Personalized Affiliate Link
                   </h3>
                   <a
-                    href={link}
+                    href={`${API_URL}/link/${link}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 underline">
-                    {link}
+                    {`${API_URL}/link/${link}`}
                   </a>
                 </div>
               )}

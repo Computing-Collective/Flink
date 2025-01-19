@@ -38,7 +38,7 @@ def get_link(code: str, session: db.SessionDep):
         return RedirectResponse(url="/")
     url_parts = list(urlparse.urlparse(link.redirect_url))
     query = dict(urlparse.parse_qsl(url_parts[4]))
-    query.update({"code": link.code})
+    query.update({"flink": link.code})
 
     url_parts[4] = urlencode(query)
     return RedirectResponse(urlparse.urlunparse(url_parts))

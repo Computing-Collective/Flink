@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("Personalize script loaded");
   const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get("code");
+  const code = urlParams.get("flink");
   if (!code) {
     return
   }
-  console.log("Code:", code);
+  console.log("Flink Code:", code);
 
   try {
     const response = await fetch(`http://localhost:8000/link/${code}/decode`);

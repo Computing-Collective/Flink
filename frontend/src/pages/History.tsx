@@ -62,6 +62,7 @@ export type AffiliateLink = {
   customUrl: string;
   summary: string;
   productName: string;
+  code: string;
 };
 
 export function History() {
@@ -89,6 +90,7 @@ export function History() {
           customUrl: item.redirect_url,
           summary: item.website_text,
           productName: item.product,
+          code: item.code,
         }));
         setData(resultData);
       } catch (error) {
@@ -98,6 +100,28 @@ export function History() {
 
     fetchData();
   }, []);
+
+  async function handleDelete(code: string) {
+    const response = await fetch(`${API_URL}/link/${code}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    if (response.ok) {
+      setData(data.filter((item) => item.code !== code));
+      toast({
+        variant: "destructive",
+        description: "Deleted affiliate link",
+      });
+    } else {
+      toast({
+        variant: "default",
+        description: json.detail,
+      });
+    }
+  }
 
   const columns: ColumnDef<AffiliateLink>[] = [
     {
@@ -202,10 +226,7 @@ export function History() {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
-                  toast({
-                    variant: "destructive",
-                    description: "Deleted affiliate link",
-                  });
+                  handleDelete(affiliateLink.code);
                 }}>
                 <p className="text-red-500">Delete Affiliate Link</p>
               </DropdownMenuItem>

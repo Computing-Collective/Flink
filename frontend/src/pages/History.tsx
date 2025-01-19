@@ -168,7 +168,7 @@ export function History() {
       accessorKey: "originalUrl",
       header: "Original URL",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("originalUrl")}</div>
+        <div className="lowercase">{row.getValue("originalUrl")}</div>
       ),
     },
     {

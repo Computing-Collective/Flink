@@ -1,7 +1,5 @@
 [tool.poetry]
 package-mode = false
-name = "backend"
-description = ""
 authors = ["Elio Di Nino <52972357+ElioDiNino@users.noreply.github.com>"]
 readme = "README.md"
 

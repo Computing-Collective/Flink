@@ -175,7 +175,9 @@ export function History() {
       accessorKey: "customUrl",
       header: "Custom URL",
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("customUrl")}</div>
+        <div className="lowercase">{`${
+          window.location.origin
+        }/link/${row.getValue("code")}`}</div>
       ),
     },
     {

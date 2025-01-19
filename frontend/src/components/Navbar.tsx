@@ -23,7 +23,7 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center gap-10 text-card-foreground">
           <li className="text-primary font-medium">
             <a href="/">
-              <img src="icon.png" alt="icon" className="h-10 w-12" />
+              <img src="favicon.ico" alt="icon" className="h-10 w-10" />
             </a>
           </li>
           <li>
@@ -53,7 +53,7 @@ const Navbar = () => {
             <DropdownMenuContent align="start">
               <DropdownMenuItem>
                 <a href="/">
-                  <img src="icon.png" alt="icon" className="h-8 w-8" />
+                  <img src="favicon.ico" alt="icon" className="h-8 w-8" />
                 </a>
               </DropdownMenuItem>
               <DropdownMenuItem>

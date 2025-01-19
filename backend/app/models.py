@@ -76,6 +76,10 @@ class LinkPublic(LinkBase):
     user_id: uuid.UUID
 
 
+class LinkDecode(SQLModel):
+    website_text: str
+
+
 class LinksPublic(SQLModel):
     data: list[LinkPublic]
     count: int

@@ -77,7 +77,7 @@ export default function Generate() {
 
     const json = await response.json();
 
-    setLink(json.link);
+    setLink(json.code);
 
     setIsLoading(false);
   };

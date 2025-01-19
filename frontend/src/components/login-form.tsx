@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { API_URL } from "@/App";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export function LoginForm({
   className,
@@ -20,6 +21,7 @@ export function LoginForm({
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [signup, setSignup] = useState(false);
+  const { toast } = useToast();
 
   async function handleLogin() {
     let route = "login";
@@ -36,16 +38,21 @@ export function LoginForm({
 
     const json = await response.json();
 
-    const userId = json.id;
-
-    console.log(userId);
-
-    if (userId) {
-      localStorage.setItem("userId", userId);
-    }
-
     if (response.ok) {
+      const userId = json.id;
+      const name = json.name;
+      console.log(userId);
+
+      if (userId && name) {
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("username", name);
+      }
+
       window.location.href = "/";
+    } else {
+      toast({
+        title: json.detail,
+      });
     }
   }
 

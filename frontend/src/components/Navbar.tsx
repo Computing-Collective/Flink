@@ -10,9 +10,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const Navbar = () => {
-  const [username, setUsername] = useState("MKBHD");
+  const [username, setUsername] = useState(localStorage.getItem("username"));
   function handleLogout() {
     localStorage.removeItem("userId");
+    localStorage.removeItem("username");
     window.location.href = "/login";
   }
 
@@ -27,11 +28,7 @@ const Navbar = () => {
             <a href="/history">History</a>
           </li>
         </ul>
-        <div className="flex-grow" />
-        <div className="flex justify-center items-center flex-grow">
-          <p className="text-lg">{username}</p>
-        </div>
-        <div className="flex-grow" />
+        <div className="m-auto">{username}</div>
         <Button
           variant="secondary"
           className="hidden md:flex px-2"

@@ -38,22 +38,22 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 
-const data: AffiliateLink[] = [
-  {
-    id: "728ed52f",
-    originalUrl: "https://example.com/product1",
-    customUrl: "https://short.ly/product1",
-    summary: "A great product for your needs.",
-    productName: "Product 1",
-  },
-  {
-    id: "489e1d42",
-    originalUrl: "https://example.com/product2",
-    customUrl: "https://short.ly/product2",
-    summary: "Another fantastic product.",
-    productName: "Product 2",
-  },
-];
+// const data: AffiliateLink[] = [
+//   {
+//     id: "728ed52f",
+//     originalUrl: "https://example.com/product1",
+//     customUrl: "https://short.ly/product1",
+//     summary: "A great product for your needs.",
+//     productName: "Product 1",
+//   },
+//   {
+//     id: "489e1d42",
+//     originalUrl: "https://example.com/product2",
+//     customUrl: "https://short.ly/product2",
+//     summary: "Another fantastic product.",
+//     productName: "Product 2",
+//   },
+// ];
 
 export type AffiliateLink = {
   id: string;
@@ -72,6 +72,28 @@ export function History() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [data, setData] = React.useState<AffiliateLink[]>([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("API_URL/links");
+        const result = await response.json();
+        const resultData = result.data.map((item: any) => ({
+          id: item.id,
+          originalUrl: item.source_url,
+          customUrl: item.redirect_url,
+          summary: item.website_text,
+          productName: item.product,
+        }));
+        setData(resultData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns: ColumnDef<AffiliateLink>[] = [
     {

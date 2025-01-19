@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import "./App.css";
 import Login from "@/pages/Login";
 import Generate from "@/pages/Generate";
 import AuthRoute from "@/components/AuthRoute";
+import { History } from "@/pages/History";
+import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   const isAuthenticated = true; // TODO add auth
@@ -21,8 +22,18 @@ function App() {
               />
             }
           />
+          <Route
+            path="/history"
+            element={
+              <AuthRoute
+                isAuthenticated={isAuthenticated}
+                element={<History />}
+              />
+            }
+          />
         </Routes>
       </Router>
+      <Toaster />
     </div>
   );
 }

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/components/Navbar";
+import { API_URL } from "@/App";
 
 const formSchema = z.object({
   videoId: z
@@ -74,9 +75,21 @@ export default function Generate() {
     handleGenerate(videoId, values.productName);
   }
 
-  const handleGenerate = (video: string, productName: string) => {
+  const handleGenerate = (videoId: string, productName: string) => {
     setIsLoading(true);
     // Simulate an async operation
+    const response = fetch(`${API_URL}/create_link`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: localStorage.getItem("userId"),
+        product: productName,
+        source_url: videoId,
+        redirect_url: redirectUrl 
+      }),
+    })
     setTimeout(() => {
       setIsLoading(false);
       setLink("https://example.com/affiliate-link");

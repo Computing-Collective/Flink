@@ -1,0 +1,20 @@
+[tool.poetry]
+package-mode = false
+name = "backend"
+description = ""
+authors = ["Elio Di Nino <52972357+ElioDiNino@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.14"
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+sqlmodel = "^0.0.22"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+openai = "^1.59.8"
+youtube-transcript-api = "^0.6.3"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

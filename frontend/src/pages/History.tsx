@@ -79,7 +79,7 @@ export function History() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${API_URL}/links?id=${localStorage.getItem("userId")}`
+          `${API_URL}/links/${localStorage.getItem("userId")}`
         );
         const result = await response.json();
         console.log(result);

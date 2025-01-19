@@ -42,9 +42,9 @@ export default function Generate() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      videoUrl: "youtube.com/watch?v=E76CUtSHMrU",
-      productName: "Apple iPhone 16 Pro",
-      redirectUrl: "https://apple.com",
+      videoUrl: "youtube.com/watch?v=o2FlbHKk-jk",
+      productName: "K2 Standard",
+      redirectUrl: "https://k2snow.com",
     },
   });
 
@@ -87,7 +87,8 @@ export default function Generate() {
       <Navbar />
       <div className="max-w-screen-md mx-auto p-8">
         <h2 className="text-2xl font-bold pb-8">
-          Generate customized affiliate links
+          Flink personalizes e-commerce shopping experiences using custom
+          affiliate links
         </h2>
         <div className="grid grid-cols-1 gap-6">
           {isLoading ? (

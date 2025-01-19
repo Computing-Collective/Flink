@@ -226,7 +226,7 @@ export function History() {
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
-                  navigator.clipboard.writeText(affiliateLink.customUrl);
+                  navigator.clipboard.writeText(`${window.location.origin}/link/${affiliateLink.code}`);
                   toast({
                     description: "Copied to clipboard",
                   });

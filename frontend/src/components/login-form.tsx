@@ -18,6 +18,7 @@ export function LoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [signup, setSignup] = useState(false);
 
   async function handleLogin() {
@@ -30,7 +31,7 @@ export function LoginForm({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, name }),
     });
 
     const json = await response.json();
@@ -64,6 +65,17 @@ export function LoginForm({
           <form>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
+                <div className="flex items-center">Name</div>
+                <Input
+                  id="name"
+                  type="text"
+                  required
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
                 <Label htmlFor="email" className="text-start">
                   Email
                 </Label>
@@ -88,6 +100,7 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+
               <Button
                 type="submit"
                 className="w-full"

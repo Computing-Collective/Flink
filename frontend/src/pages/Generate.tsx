@@ -42,8 +42,9 @@ export default function Generate() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      videoUrl: "",
-      productName: "",
+      videoUrl: "youtube.com/watch?v=E76CUtSHMrU",
+      productName: "Apple iPhone 16 Pro",
+      redirectUrl: "https://apple.com",
     },
   });
 
@@ -54,14 +55,14 @@ export default function Generate() {
     handleGenerate(values.videoUrl, values.productName, values.redirectUrl);
   }
 
-  const handleGenerate = (
+  const handleGenerate = async (
     videoUrl: string,
     productName: string,
     redirectUrl: string
   ) => {
     setIsLoading(true);
     // Simulate an async operation
-    const response = fetch(`${API_URL}/create_link`, {
+    const response = await fetch(`${API_URL}/create_link`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,11 +74,12 @@ export default function Generate() {
         redirect_url: redirectUrl,
       }),
     });
-    setTimeout(() => {
-      setIsLoading(false);
-      setLink("https://example.com/affiliate-link");
-      // Add your generate logic here
-    }, 2000);
+
+    const json = await response.json();
+
+    setLink(json.link);
+
+    setIsLoading(false);
   };
 
   return (

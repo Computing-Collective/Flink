@@ -7,15 +7,15 @@ from app.models import *
 router = APIRouter(tags=["users"])
 
 
-@router.post("/login")
+@router.post("/login", response_model=UserPublic)
 def login(user: UserLogin, session: db.SessionDep):
     db_user = db.authenticate(session=session, email=user.email, password=user.password)
     if not db_user:
         raise HTTPException(status_code=401, detail="Incorrect email or password")
-    return {"id": db_user.id}
+    return UserPublic.model_validate(db_user)
 
 
-@router.post("/signup")
+@router.post("/signup", response_model=UserPublic)
 def signup(user: UserCreate, session: db.SessionDep):
     test_user = db.get_user_by_email(session=session, email=user.email)
     if test_user:
@@ -24,7 +24,7 @@ def signup(user: UserCreate, session: db.SessionDep):
         db_user = db.create_user(session=session, user=user)
     except:
         raise HTTPException(status_code=400, detail="Invalid user data")
-    return {"id": db_user.id}
+    return UserPublic.model_validate(db_user)
 
 
 @router.get("/users", response_model=UsersPublic)

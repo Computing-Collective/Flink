@@ -4,6 +4,7 @@ from fastapi import Depends
 from sqlmodel import Session, SQLModel, create_engine, select
 
 from app.models import *
+from app.genai import generate_website_text
 from app.security import get_password_hash, verify_password
 
 
@@ -49,3 +50,17 @@ def authenticate(*, session: Session, email: str, password: str) -> User | None:
     if not verify_password(password, db_user.hashed_password):
         return None
     return db_user
+
+
+def create_link(*, session: Session, link: LinkCreate) -> Link:
+    db_link = Link.model_validate(link)
+    session.add(db_link)
+    session.commit()
+    session.refresh(db_link)
+    db_link.website_text = generate_website_text(
+        db_link.source_url, db_link.user.name, db_link.product
+    )
+    session.add(db_link)
+    session.commit()
+    session.refresh(db_link)
+    return db_link

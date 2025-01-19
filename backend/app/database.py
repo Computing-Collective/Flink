@@ -8,7 +8,7 @@ from app.genai import generate_website_text
 from app.security import get_password_hash, verify_password
 
 
-sqlite_file_name = "database.db"
+sqlite_file_name = "instance/database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
 connect_args = {"check_same_thread": False}
